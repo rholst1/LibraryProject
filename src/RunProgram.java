@@ -6,11 +6,14 @@ public class RunProgram {
 	private ILibrary<E> library;
 	
 	private enum Command {
-		ADD,
-		REMOVE,
-		DISPLAY,
-		QUIT,
-		UNKNOWN
+		LIST,               // Prints article number, Title and status
+		CHECKOUT,			// Lets user add name and phone number to system, and removes item from stock
+		CHECKIN,			// Adding item back to stock after lending
+		REGISTER,			// Adding a new item to system
+		DEREGISTER,			// Removing item from system
+		INFO,				// Prints out information about item with that article number
+		QUIT,				// QUits the program
+		UNKNOWN;			// UNKNOWN COMMAND
 	}
 	
 	public MovieLibraryManager(String moviesPath) {
@@ -46,14 +49,26 @@ public class RunProgram {
 			String[] arguments = parseArguments(userInput);
 			
 			switch (command) {
-			case ADD:
-				addCommand(arguments);
+			case LIST:
+				listCommand(arguments);
 				break;
-			case REMOVE:
-				removeCommand(arguments);
+			case CHECKOUT:
+				checkoutCommand(arguments);
 				break;
-			case DISPLAY:
-				displayCommand();
+			case CHECKIN:
+				checkinCommand(arguments);
+				break;
+			case REGISTER:
+				registerCommand (arguments);
+				break;
+			case DEREGISTER:
+				deRegisterCommand (arguments);
+				break;
+			case INFO:
+				infoCommand (arguments);
+				break;
+			case QUIT:
+				quitCommand (arguments);
 				break;
 			}
 			
@@ -63,14 +78,24 @@ public class RunProgram {
 		
 	}
 
-	private void addCommand(String[] arguments) {
+	private void registerCommand(String[] arguments) {
+	
 		String title;
+		String publisher;
+		int id;
+		int value;
 		int runtime;
 		float rating;
+		int totalPages;
+		
 		try {
 			title = arguments[0];
 			runtime = Integer.parseInt(arguments[1]);
 			rating = Float.parseFloat(arguments[2]);
+			publisher = arguments [3];
+			id = Integer.parseInt(arguments[4]);
+			value = Integer.parseInt(arguments[5]);
+			totalPages = Integer.parseInt(arguments[6]);
 		} catch (Exception e) {
 			System.out.println("Failed to parse movie attributes from arguments.");
 			return;
@@ -98,12 +123,18 @@ public class RunProgram {
     private Command parseCommand(String userInput) {
     	String commandString = userInput.split(" ")[0];
     	switch(commandString) {
-    		case "add":
-				return Command.ADD;
-    		case "remove":
-    			return Command.REMOVE;
-    		case "display":
-				return Command.DISPLAY;
+    		case "list":
+				return Command.LIST;
+    		case "checkout":
+    			return Command.CHECKOUT;
+    		case "checkin":
+				return Command.CHECKIN;
+    		case "register":
+				return Command.REGISTER;
+    		case "deregister":
+				return Command.DEREGISTER;
+    		case "info":
+				return Command.INFO;
     		case "quit":
     		case "exit":
     			return Command.QUIT;
