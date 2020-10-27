@@ -4,7 +4,7 @@ public class Item {
 	protected int id;
 	protected String title;
 	protected int value;
-	protected  String typeOfItem;
+	protected String typeOfItem;
 	
 	
 	
@@ -39,8 +39,6 @@ public class Item {
 		super();
 	}
 
-	
-	
-	
+
 
 }

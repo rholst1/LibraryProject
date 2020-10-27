@@ -27,7 +27,7 @@ public class Movie extends Item {
 	}
 
 	public String movieCsvRecord() {
-		return String.format("%s,%d,%s,%d,%d,%.1f", this.typeOfItem, this.id, this.title, this.value, this.runtime, this.rating);
+		return String.format("%s,%d,%s,%d,%d,%s", this.typeOfItem, this.id, this.title, this.value, this.runtime, this.rating);
 	}
 	
 	public static Movie parseMovie(String csvRecord) {
@@ -39,13 +39,14 @@ public class Movie extends Item {
 		int runtime = Integer.parseInt(values[4]);
 		float rating = Float.parseFloat(values[5]);
 		
-		return new Movie(id, title, value, runtime, rating);
+		Movie movie = new Movie(id, title, value, runtime, rating);
+		return movie;
 		
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("ID: %d | Title: %s | Value: %d | Runtime: %d | Rating %.1f", getId(), getTitle(), getValue(), this.runtime, this.rating);
+		return String.format("ID: %d | Title: %s | Value: %d | Runtime: %d | Rating: %.1f", getId(), getTitle(), getValue(), this.runtime, this.rating);
 	}
 	
 }
