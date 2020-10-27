@@ -79,18 +79,19 @@ public class RunProgram {
 	}
 
 	private void listCommand(String[] arguments) {
-		System.out.println(library);
+
+		System.out.println(item.toString());
 	}
 
 	private void checkoutCommand(String[] arguments) {
 
 	}
 
-	private void CheckinCommand(String[] arguments) {
+	private void checkinCommand(String[] arguments) {
 
 	}
 
-	private void deregisterCommand(String[] arguments) {
+	private void deRegisterCommand(String[] arguments) {
 
 	}
 
@@ -114,7 +115,7 @@ public class RunProgram {
 		char book = 'b';
 		char movie = 'm';
 		
-		if (arguments[0] == book)
+		if (arguments[0] == book) {
 			try {
 				title = arguments[1];
 				totalPages = Integer.parseInt(arguments[2]);
@@ -123,25 +124,21 @@ public class RunProgram {
 				value = Integer.parseInt(arguments[5]);
 			 }
 			
-		else if	(arguments[0]== movie)
+		else if	(arguments[0]== movie) {
 			try {
 				title = arguments[1];
 				runtime = Integer.parseInt(arguments[2]);
 				rating = float.parsefloat(arguments[3]);
 				id = Integer.parseInt(arguments[4]);
-			}
 				
-					
-				
-			}catch(
-
-	Exception e)
-	{
+		}catch(Exception e){
+	
 		System.out.println("Failed to parse movie attributes from arguments.");
 		return;
 	}
 	E movie = new E(title, runtime, rating);
-	R book = new R(title, totalPages, publisher);library.add(movie);
+	R book = new R(title, totalPages, publisher);
+	library.add(movie);
 	}
 
 	private void removeCommand(String[] arguments) {

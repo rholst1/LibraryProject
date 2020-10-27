@@ -1,4 +1,5 @@
 
+
 public class Movie extends Item {
 	private int runtime;
 	private float rating;
@@ -31,8 +32,7 @@ public class Movie extends Item {
 	}
 	
 	public static Movie parseMovie(String csvRecord) {
-		String[] values = csvRecord.split(",");
-		
+		String[] values = csvRecord.split(",");	
 		int id = Integer.parseInt(values[1]);
 		String title = values[2];
 		int value = Integer.parseInt(values[3]);
