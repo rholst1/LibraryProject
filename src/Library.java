@@ -11,7 +11,7 @@ import java.util.Scanner;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-public class Library<T extends Item> {
+public class Library {
 
 	private LinkedList<Item> library = new LinkedList();
 
@@ -26,7 +26,7 @@ public class Library<T extends Item> {
 		// TODO Auto-generated constructor stub
 	}
 
-	public <T> void add(Item item) {
+	public void add(Item item) {
 		library.add(item);
 	}
 
@@ -46,6 +46,10 @@ public class Library<T extends Item> {
 		this.libraryPath = libraryPath;
 	}
 
+	public void removeFromInventory(int itemToRemoveIndex) {
+		library.remove(itemToRemoveIndex);
+	}
+
 	public void writeItems() throws IOException {
 
 		try {
@@ -57,14 +61,15 @@ public class Library<T extends Item> {
 				if (type == typesOfItems[0]) {
 					Movie movie = (Movie) item;
 
-					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(), movie.getRuntime(), movie.getRating());
+					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(),
+							movie.getRuntime(), movie.getRating());
 				} else if (type == typesOfItems[1]) {
-					System.out.println("made it to print book");
+
 					Book book = (Book) item;
-					printer.printRecord(book.getTypeOfItem(), book.getId(), book.getTitle(), book.getValue(), book.getTotalPages(), book.getPublisher());
+					printer.printRecord(book.getTypeOfItem(), book.getId(), book.getTitle(), book.getValue(),
+							book.getTotalPages(), book.getPublisher());
 				}
 
-				
 			}
 			printer.close();
 		} catch (IOException e) {
@@ -82,9 +87,9 @@ public class Library<T extends Item> {
 			while (sc.hasNextLine()) {
 				contents = sc.nextLine();
 				char typeOfItem = parseItem(contents);
-				System.out.println("type of item: " + typeOfItem);
+
 				if (typeOfItem == 'm') {
-					System.out.println("made it to parsemovie");
+
 					Item movie = (Item) Movie.parseMovie(contents);
 					library.add(movie);
 				} else if (typeOfItem == 'b') {
@@ -95,7 +100,7 @@ public class Library<T extends Item> {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println(e);
+			
 		}
 
 	}
@@ -106,15 +111,30 @@ public class Library<T extends Item> {
 		return typeOfItem;
 	}
 
+//	private int parseId(String csvRecord) {
+//		String[] values = csvRecord.split(",");
+//		int id = Integer.parseInt(values[1]);
+//		return id;
+//	}
+
 	public void printInventory() {
 		for (int i = 0; i < library.size(); i++) {
-			Item tempItem = library.get(i);
-			String tempType = tempItem.getTypeOfItem();
-			if (tempType == "m") {
-				System.out.println(((Movie) tempItem).toString());
-			} else if (tempType == "b") {
-				System.out.println(((Book) tempItem).toString());
-			}
+			Item thisItem = library.get(i);
+			System.out.println(thisItem.toStringList());
 		}
+	}
+
+	public int searchLibrary(String id) {
+		int intId = Integer.parseInt(id);
+		for (int i = 0; i < library.size(); i++) {
+			Item tempItem = library.get(i);
+			int tempId = tempItem.getId();
+			if (intId == tempId) {
+				return i;
+			}
+
+		}
+		System.out.println("Could not find the item. Enter a valid ID.");
+		return -1;
 	}
 }

@@ -28,7 +28,7 @@ public class Movie extends Item {
 	}
 
 	public String movieCsvRecord() {
-		return String.format("%s,%d,%s,%d,%d,%s", this.typeOfItem, this.id, this.title, this.value, this.runtime, this.rating);
+		return String.format("%s,%d,%s,%d,%d,%.1f", this.typeOfItem, this.id, this.title, this.value, this.runtime, this.rating);
 	}
 	
 	public static Movie parseMovie(String csvRecord) {

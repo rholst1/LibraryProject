@@ -34,6 +34,11 @@ public class Item {
 	public void setValue(int value) {
 		this.value = value;
 	}
+	
+	
+	public String toStringList() {
+		return String.format("ID: %d | Title: %s", this.id, this.title);
+	}
 
 	public Item() {
 		super();
