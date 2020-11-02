@@ -90,22 +90,25 @@ public class RunProgram {
 			String title = sc.nextLine();
 			System.out.print("\nEnter Value: ");
 			int value = Integer.parseInt(sc.nextLine());
-
+					
+			
 			if (type.equals(TYPE_MOVIE)) {
+				
 				System.out.print("\nEnter Runtime: ");
 				int runtime = Integer.parseInt(sc.nextLine());
-				System.out.println(runtime);
 				System.out.print("\nEnter Rating: ");
 				float rating = Float.parseFloat(sc.nextLine());
 
-				System.out.println(rating);
 				Movie userInputMovie = new Movie(id, title, value, runtime, rating);
 				itemLibrary.add(userInputMovie);
+				
 			} else if (type.equals(TYPE_BOOK)) {
+				
 				System.out.println("\nEnter Total pages: ");
 				int totalPages = Integer.parseInt(sc.nextLine());
 				System.out.println("\nEnter publisher: ");
 				String publisher = sc.nextLine();
+				
 				Book userInputBook = new Book(id, title, value, totalPages, publisher);
 				itemLibrary.add(userInputBook);
 			}
