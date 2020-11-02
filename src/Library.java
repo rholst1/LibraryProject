@@ -49,7 +49,7 @@ public class Library {
 		library.remove(itemToRemoveIndex);
 	}
 
-	public void writeItems() throws IOException {
+	public void writeItems() {
 
 		try {
 			FileWriter writer = new FileWriter(libraryPath, false);
@@ -128,11 +128,11 @@ public class Library {
 			Item tempItem = library.get(i);
 			int tempId = tempItem.getId();
 			if (intId == tempId) {
-				return false;
+				return true;
 			}
 
 		}
-		return true;
+		return false;
 	}
 
 	public int getIndexFromItemId(String id) {

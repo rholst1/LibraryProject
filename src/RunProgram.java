@@ -21,7 +21,7 @@ public class RunProgram {
 		Scanner scanner = new Scanner(System.in);
 		displayCommand();
 		while (running) {
-			System.out.print("Please enter a command:> ");
+			System.out.printf("\nPlease enter a command:> ");
 			String userInput = scanner.nextLine();
 
 			handleCommand(commandManager.parseCommand(userInput), commandManager.parseArguments(userInput));
@@ -81,7 +81,7 @@ public class RunProgram {
 
 			System.out.print("\nEnter ID: ");
 			String userInputId = sc.nextLine();
-			if (!itemLibrary.validId(userInputId)) {
+			if (itemLibrary.validId(userInputId)) {
 				System.out.println("ID is unavailable, enter a different ID.");
 				return;
 			}
@@ -123,10 +123,15 @@ public class RunProgram {
 	private void deRegisterCommand(String id) {
 
 		int itemToRemoveIndex = itemLibrary.getIndexFromItemId(id);
-		if (itemToRemoveIndex >= 0) {
+		Item itemToRemoveName = itemLibrary.get(itemToRemoveIndex);
+		String itemName = itemToRemoveName.getTitle();
+		if (itemLibrary.validId(id)) {
 			itemLibrary.removeFromInventory(itemToRemoveIndex);
-		}
-
+			itemLibrary.writeItems();
+			System.out.printf("\nSuccesfully deregistered %s." ,itemName);
+		} else
+			System.out.printf("\nError: Could not find ID.");
+		
 	}
 
 	private void infoCommand(String id) {
