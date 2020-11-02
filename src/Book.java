@@ -30,7 +30,7 @@ public class Book extends Item {
 	}
 
 	public String bookCsvRecord() {
-		return String.format("%s,%d,%s,%d,%d,%s,\n", this.typeIdentifier, this.id, this.title, this.value, this.totalPages, this.publisher);
+		return String.format("%s,%d,%s,%d,%d,%s,\n", this.typeOfItem, this.id, this.title, this.value, this.totalPages, this.publisher);
 	}
 	
 	public static Book parseBook(String csvRecord) {
