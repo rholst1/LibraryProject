@@ -2,11 +2,10 @@
 public class Book extends Item {
 	private int totalPages;
 	private String publisher;
-	private String typeIdentifier = "b";
 
 	protected Book(int id, String title, int value, int totalPages, String publisher) {
 		super();
-		this.typeOfItem = typeIdentifier;
+		this.typeOfItem = RunProgram.TYPE_BOOK;
 		this.id = id;
 		this.title = title;
 		this.value = value;

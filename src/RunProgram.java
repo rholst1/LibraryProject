@@ -36,7 +36,7 @@ public class RunProgram {
 			listCommand();
 			break;
 		case CHECKOUT:
-			checkoutCommand(arguments);
+			checkoutCommand(arguments); 
 			break;
 		case CHECKIN:
 			// checkinCommand(arguments);
@@ -52,48 +52,11 @@ public class RunProgram {
 			infoCommand(arguments);
 			break;
 		case QUIT:
-			// quitCommand(arguments);
+				System.exit(0);
 			break;
 		}
 	}
 
-//	private void registerCommand(String[] arguments) {
-//
-//		String title;
-//		String publisher;
-//		int id;
-//		int value;
-//		int runtime;
-//		float rating;
-//		int totalPages;
-//		char book = 'b';
-//		char movie = 'm';
-//		
-//		if (arguments[0] == book) {
-//			try {
-//				title = arguments[1];
-//				totalPages = Integer.parseInt(arguments[2]);
-//				publisher = arguments[3];
-//				id = Integer.parseInt(arguments[4]);
-//				value = Integer.parseInt(arguments[5]);
-//			 }
-//			
-//		else if	(arguments[0]== movie) {
-//			try {
-//				title = arguments[1];
-//				runtime = Integer.parseInt(arguments[2]);
-//				rating = float.parsefloat(arguments[3]);
-//				id = Integer.parseInt(arguments[4]);
-//				
-//		}catch(Exception e){
-//	
-//		System.out.println("Failed to parse movie attributes from arguments.");
-//		return;
-//	}
-//	E movie = new E(title, runtime, rating);
-//	R book = new R(title, totalPages, publisher);
-//	library.add(movie);
-//	}
 
 	private void listCommand() {
 		itemLibrary.printInventory();
@@ -195,4 +158,6 @@ public class RunProgram {
 		
 		
 	}
+	
+	
 }

@@ -16,7 +16,6 @@ public class Library {
 	private LinkedList<Item> library = new LinkedList();
 
 	private String libraryPath;
-	private String[] typesOfItems = new String[] { "m", "b" };
 
 	public Library(String libraryPath) {
 		this.libraryPath = libraryPath;
@@ -53,19 +52,20 @@ public class Library {
 	public void writeItems() throws IOException {
 
 		try {
-			FileWriter writer = new FileWriter(libraryPath, true);
+			FileWriter writer = new FileWriter(libraryPath, false);
 			CSVPrinter printer = new CSVPrinter(writer, CSVFormat.EXCEL);
+			
 			for (Item item : library) {
 				String type = item.getTypeOfItem();
-				char extraComma = ' ';
-				if (type == typesOfItems[0]) {
+				if (type.equals(RunProgram.TYPE_MOVIE)) {
 					Movie movie = (Movie) item;
-
+					System.out.println("printing movie");
 					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(), 
 							movie.getRuntime(), movie.getRating(), movie.isBorrowedToCustomer(), movie.getCustomerLentToName(), movie.getCustomerLentToPhoneNumber());
-				} else if (type == typesOfItems[1]) {
+				} else if (type.equals(RunProgram.TYPE_BOOK)) {
 
 					Book book = (Book) item;
+					System.out.println("printing book");
 					printer.printRecord(book.getTypeOfItem(), book.getId(), book.getTitle(), book.getValue(),
 							book.getTotalPages(), book.getPublisher(), book.isBorrowedToCustomer(), book.getCustomerLentToName(), book.getCustomerLentToPhoneNumber());
 				}
@@ -86,14 +86,14 @@ public class Library {
 
 			while (sc.hasNextLine()) {
 				contents = sc.nextLine();
-				char typeOfItem = parseItem(contents);
+				String typeOfItem = parseItem(contents);
 
-				if (typeOfItem == 'm') {
-
-					Item movie = (Item) Movie.parseMovie(contents);
-					library.add(movie);
-				} else if (typeOfItem == 'b') {
-
+				if (typeOfItem.equals(RunProgram.TYPE_MOVIE)) {
+					System.out.println("reading movie");
+					add((Item) Movie.parseMovie(contents));
+					
+				} else if (typeOfItem.equals(RunProgram.TYPE_BOOK)) {
+					System.out.println("reading book");
 					add((Item) (Book.parseBook(contents)));
 				}
 
@@ -105,17 +105,12 @@ public class Library {
 
 	}
 
-	private char parseItem(String csvRecord) {
+	private String parseItem(String csvRecord) {
 		String[] values = csvRecord.split(",");
-		char typeOfItem = values[0].charAt(0);
+		String typeOfItem = values[0];
 		return typeOfItem;
 	}
 
-//	private int parseId(String csvRecord) {
-//		String[] values = csvRecord.split(",");
-//		int id = Integer.parseInt(values[1]);
-//		return id;
-//	}
 
 	public void printInventory() {
 		for (int i = 0; i < library.size(); i++) {
