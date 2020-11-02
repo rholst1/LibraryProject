@@ -6,10 +6,30 @@ public class Item {
 	protected int value;
 	protected String typeOfItem;
 	
+	protected boolean borrowedToCustomer = false;
+	protected Customer customerLentTo = new Customer("", "", -1);
 	
 	
 	
-	
+	public boolean isBorrowedToCustomer() {
+		return borrowedToCustomer;
+	}
+	public void setBorrowedToCustomer(boolean borrowedToCustomer) {
+		this.borrowedToCustomer = borrowedToCustomer;
+	}
+	public String getCustomerLentToName() {
+		return customerLentTo.getName();
+	}
+	public String getCustomerLentToPhoneNumber() {
+		return customerLentTo.getPhoneNumber();
+	}
+
+	public Customer getCustomerLentTo() {
+		return customerLentTo;
+	}
+	public void setCustomerLentTo(String customerName, String customerPhoneNumber, int idOfBorrowedItem) {
+		customerLentTo = new Customer(customerName, customerPhoneNumber, idOfBorrowedItem);
+	}
 	public String getTypeOfItem() {
 		return typeOfItem;
 	}
@@ -37,7 +57,11 @@ public class Item {
 	
 	
 	public String toStringList() {
-		return String.format("ID: %d | Title: %s", this.id, this.title);
+		String formatedString = String.format("ID: %d | Type: %s | Title: %s", this.id, this.typeOfItem, this.title);
+		if (borrowedToCustomer) {
+			formatedString += customerLentTo.toString();
+		}
+		return formatedString;
 	}
 
 	public Item() {

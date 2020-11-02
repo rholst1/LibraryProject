@@ -46,6 +46,10 @@ public class Commands {
 		}
 		return arguments; // contains only the arguments
 	}
+	
+	public void syntaxError() {
+		System.out.println("Wrong syntax, try again.");
+	}
 
 
 }

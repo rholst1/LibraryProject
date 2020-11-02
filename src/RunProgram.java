@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class RunProgram {
 
-	public final String TYPE_MOVIE = "m";
-	public final String TYPE_BOOK = "b";
+	public static final String TYPE_MOVIE = "movie";
+	public static final String TYPE_BOOK = "book";
 
 	String libraryPath = "library.csv";
 	Library itemLibrary = new Library(libraryPath);
@@ -16,7 +16,7 @@ public class RunProgram {
 
 	public void start() {
 		itemLibrary.readFile();
-		
+
 		boolean running = true;
 		Scanner scanner = new Scanner(System.in);
 		displayCommand();
@@ -36,7 +36,7 @@ public class RunProgram {
 			listCommand();
 			break;
 		case CHECKOUT:
-			// checkoutCommand(arguments);
+			checkoutCommand(arguments);
 			break;
 		case CHECKIN:
 			// checkinCommand(arguments);
@@ -111,46 +111,50 @@ public class RunProgram {
 	}
 
 	private void registerCommand() {
-		System.out.print("\nEnter type: 'm' for Movie or 'b' for Book");
+		System.out.print("\nEnter type: 'movie' or 'book'");
 
-		char type = sc.nextLine().charAt(0);
+		String type = sc.nextLine();
+		if (type.equals(TYPE_MOVIE) || type.equals(TYPE_BOOK)) {
 
-		System.out.print("\nEnter ID: ");
-		int id = Integer.parseInt(sc.nextLine());
-		System.out.print("\nEnter Title: ");
-		String title = sc.nextLine();
-		System.out.print("\nEnter Value: ");
-		int value = Integer.parseInt(sc.nextLine());
+			System.out.print("\nEnter ID: ");
+			int id = Integer.parseInt(sc.nextLine());
+			System.out.print("\nEnter Title: ");
+			String title = sc.nextLine();
+			System.out.print("\nEnter Value: ");
+			int value = Integer.parseInt(sc.nextLine());
 
-		if (type == 'm') {
-			System.out.print("\nEnter Runtime: ");
-			int runtime = Integer.parseInt(sc.nextLine());
-			System.out.println(runtime);
-			System.out.print("\nEnter Rating: ");
-			float rating = Float.parseFloat(sc.nextLine());
+			if (type.equals(TYPE_MOVIE)) {
+				System.out.print("\nEnter Runtime: ");
+				int runtime = Integer.parseInt(sc.nextLine());
+				System.out.println(runtime);
+				System.out.print("\nEnter Rating: ");
+				float rating = Float.parseFloat(sc.nextLine());
 
-			System.out.println(rating);
-			Movie userInputMovie = new Movie(id, title, value, runtime, rating);
-			itemLibrary.add(userInputMovie);
-		} else if (type == 'b') {
-			System.out.println("\nEnter Total pages: ");
-			int totalPages = Integer.parseInt(sc.nextLine());
-			System.out.println("\nEnter publisher: ");
-			String publisher = sc.nextLine();
-			Book userInputBook = new Book(id, title, value, totalPages, publisher);
-			itemLibrary.add(userInputBook);
-		}
-		try {
-			itemLibrary.writeItems();
-		} catch (IOException e) {
+				System.out.println(rating);
+				Movie userInputMovie = new Movie(id, title, value, runtime, rating);
+				itemLibrary.add(userInputMovie);
+			} else if (type.equals(TYPE_BOOK)) {
+				System.out.println("\nEnter Total pages: ");
+				int totalPages = Integer.parseInt(sc.nextLine());
+				System.out.println("\nEnter publisher: ");
+				String publisher = sc.nextLine();
+				Book userInputBook = new Book(id, title, value, totalPages, publisher);
+				itemLibrary.add(userInputBook);
+			}
+			try {
+				itemLibrary.writeItems();
+			} catch (IOException e) {
 
-			e.printStackTrace();
+				e.printStackTrace();
+			}
+		}else {
+			commandManager.syntaxError();
 		}
 	}
 
 	private void deRegisterCommand(String id) {
 
-		int itemToRemoveIndex = itemLibrary.searchLibrary(id);
+		int itemToRemoveIndex = itemLibrary.getIndexFromItemId(id);
 		if (itemToRemoveIndex >= 0) {
 			itemLibrary.removeFromInventory(itemToRemoveIndex);
 		}
@@ -159,7 +163,7 @@ public class RunProgram {
 
 	private void infoCommand(String id) {
 
-		Item thisItem = itemLibrary.get(itemLibrary.searchLibrary(id));
+		Item thisItem = itemLibrary.get(itemLibrary.getIndexFromItemId(id));
 		String thisTypeOfItem = thisItem.getTypeOfItem();
 		if (thisTypeOfItem.equals(TYPE_MOVIE)) {
 			Movie thisItemMovie = (Movie) thisItem;
@@ -175,4 +179,20 @@ public class RunProgram {
 				"Please enter one of following commands:\nlist - list all the items in the inventory\ncheckout <id number>\ncheckin <id number>\nregister - start a dialog to add a new item to the inventory.\nderegister <id number>\ninfo <id number>\nquit or exit\n");
 	}
 
+	private void checkoutCommand(String argument) {
+
+		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
+		int idOfBorrowedItem = Integer.parseInt(argument);															// to borrow
+		System.out.println("Enter customer name: ");
+		String customerName = sc.nextLine();
+		System.out.println("Enter customer phone number: ");
+		String customerPhoneNumber = sc.nextLine();
+
+		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
+		borrowedItem.setBorrowedToCustomer(true);
+		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber, idOfBorrowedItem);
+		System.out.println(borrowedItem.toStringList());
+		
+		
+	}
 }

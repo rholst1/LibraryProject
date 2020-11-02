@@ -3,11 +3,11 @@
 public class Movie extends Item {
 	private int runtime;
 	private float rating;
-	private String typeIdentifier = "m";
+	
 	
 	public Movie(int id, String title, int value, int runtime, float rating) {
 		super();
-		this.typeOfItem = typeIdentifier;
+		typeOfItem = RunProgram.TYPE_MOVIE;
 		this.id = id;
 		this.title = title;
 		this.value = value;

@@ -61,13 +61,13 @@ public class Library {
 				if (type == typesOfItems[0]) {
 					Movie movie = (Movie) item;
 
-					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(),
-							movie.getRuntime(), movie.getRating());
+					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(), 
+							movie.getRuntime(), movie.getRating(), movie.isBorrowedToCustomer(), movie.getCustomerLentToName(), movie.getCustomerLentToPhoneNumber());
 				} else if (type == typesOfItems[1]) {
 
 					Book book = (Book) item;
 					printer.printRecord(book.getTypeOfItem(), book.getId(), book.getTitle(), book.getValue(),
-							book.getTotalPages(), book.getPublisher());
+							book.getTotalPages(), book.getPublisher(), book.isBorrowedToCustomer(), book.getCustomerLentToName(), book.getCustomerLentToPhoneNumber());
 				}
 
 			}
@@ -124,7 +124,7 @@ public class Library {
 		}
 	}
 
-	public int searchLibrary(String id) {
+	public int getIndexFromItemId(String id) {
 		int intId = Integer.parseInt(id);
 		for (int i = 0; i < library.size(); i++) {
 			Item tempItem = library.get(i);
