@@ -158,6 +158,19 @@ public class RunProgram {
 		
 		
 	}
+	private void checkinCommand(String argument) {
+
+		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
+		int idOfBorrowedItem = Integer.parseInt(argument); // to borrow
+		//System.out.println("Enter article number: ");
+			String customerName = sc.nextLine();
+		// System.out.println("Enter customer phone number: ");
+			String customerPhoneNumber = sc.nextLine();
+
+		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
+		borrowedItem.setBorrowedToCustomer(false);
+		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber,idOfBorrowedItem - 1);
+		System.out.println(borrowedItem.toStringList());
 	
-	
+}
 }
