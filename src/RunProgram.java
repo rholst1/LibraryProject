@@ -81,7 +81,7 @@ public class RunProgram {
 
 			System.out.print("\nEnter ID: ");
 			String userInputId = sc.nextLine();
-			if (!itemLibrary.isIdAvailable(userInputId)) {
+			if (!itemLibrary.validId(userInputId)) {
 				System.out.println("ID is unavailable, enter a different ID.");
 				return;
 			}
@@ -170,7 +170,7 @@ public class RunProgram {
 		
 	}
 	private void checkinCommand(String argument) {
-
+		
 		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
 
 		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);

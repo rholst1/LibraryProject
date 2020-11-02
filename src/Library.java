@@ -119,16 +119,23 @@ public class Library {
 		}
 	}
 	
-	public boolean isIdAvailable(String id) {
-		boolean isIdAvailable = true ;
-		
-		int checkId = Integer.parseInt(id);
-		Item checkItem = library.get(getIndexFromItemId(id));
-		return isIdAvailable = (checkId != checkItem.getId());
-		
+
+	
+	public boolean validId(String id) {
+		int intId = Integer.parseInt(id);
+
+		for (int i = 0; i < library.size(); i++) {
+			Item tempItem = library.get(i);
+			int tempId = tempItem.getId();
+			if (intId == tempId) {
+				return false;
+			}
+
+		}
+		return true;
 	}
 
-	public int getIndexFromItemId(String id) {
+	public int getIndexFromItemId(String id) throws Exception {
 		int intId = Integer.parseInt(id);
 		for (int i = 0; i < library.size(); i++) {
 			Item tempItem = library.get(i);
@@ -136,7 +143,7 @@ public class Library {
 			if (intId == tempId) {
 				return i;
 			}
-
+		
 		}
 		System.out.println("Could not find the item. Enter a valid ID.");
 		return -1;
