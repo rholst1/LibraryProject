@@ -135,7 +135,7 @@ public class Library {
 		return true;
 	}
 
-	public int getIndexFromItemId(String id) throws Exception {
+	public int getIndexFromItemId(String id) {
 		int intId = Integer.parseInt(id);
 		for (int i = 0; i < library.size(); i++) {
 			Item tempItem = library.get(i);

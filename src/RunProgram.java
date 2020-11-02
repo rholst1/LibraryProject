@@ -158,7 +158,8 @@ public class RunProgram {
 		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
 		borrowedItem.setBorrowedToCustomer(true);
 		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber, idOfBorrowedItem);
-		System.out.println(borrowedItem.toStringList());
+		
+		System.out.printf("\nSuccefully lended %s to %s\n", borrowedItem.getTitle(), customerName);
 		
 		try {
 			itemLibrary.writeItems();
