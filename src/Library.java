@@ -59,13 +59,13 @@ public class Library {
 				String type = item.getTypeOfItem();
 				if (type.equals(RunProgram.TYPE_MOVIE)) {
 					Movie movie = (Movie) item;
-					System.out.println("printing movie");
+					
 					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(), 
 							movie.getRuntime(), movie.getRating(), movie.isBorrowedToCustomer(), movie.getCustomerLentToName(), movie.getCustomerLentToPhoneNumber());
 				} else if (type.equals(RunProgram.TYPE_BOOK)) {
 
 					Book book = (Book) item;
-					System.out.println("printing book");
+					
 					printer.printRecord(book.getTypeOfItem(), book.getId(), book.getTitle(), book.getValue(),
 							book.getTotalPages(), book.getPublisher(), book.isBorrowedToCustomer(), book.getCustomerLentToName(), book.getCustomerLentToPhoneNumber());
 				}
@@ -89,11 +89,11 @@ public class Library {
 				String typeOfItem = parseItem(contents);
 
 				if (typeOfItem.equals(RunProgram.TYPE_MOVIE)) {
-					System.out.println("reading movie");
+					
 					add((Item) Movie.parseMovie(contents));
 					
 				} else if (typeOfItem.equals(RunProgram.TYPE_BOOK)) {
-					System.out.println("reading book");
+					
 					add((Item) (Book.parseBook(contents)));
 				}
 
@@ -117,6 +117,15 @@ public class Library {
 			Item thisItem = library.get(i);
 			System.out.println(thisItem.toStringList());
 		}
+	}
+	
+	public boolean isIdAvailable(String id) {
+		boolean isIdAvailable = true ;
+		
+		int checkId = Integer.parseInt(id);
+		Item checkItem = library.get(getIndexFromItemId(id));
+		return isIdAvailable = (checkId != checkItem.getId());
+		
 	}
 
 	public int getIndexFromItemId(String id) {

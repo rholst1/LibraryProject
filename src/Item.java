@@ -28,7 +28,9 @@ public class Item {
 		return customerLentTo;
 	}
 	public void setCustomerLentTo(String customerName, String customerPhoneNumber, int idOfBorrowedItem) {
-		customerLentTo = new Customer(customerName, customerPhoneNumber, idOfBorrowedItem);
+		customerLentTo.setName(customerName);
+		customerLentTo.setPhoneNumber(customerPhoneNumber);
+		customerLentTo.setIdOfBorrowedItem(idOfBorrowedItem);
 	}
 	public String getTypeOfItem() {
 		return typeOfItem;

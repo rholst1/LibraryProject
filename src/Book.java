@@ -41,9 +41,17 @@ public class Book extends Item {
 		int value = Integer.parseInt(values[3]);
 		int totalPages = Integer.parseInt(values[4]);
 		String publisher = values[5];
+		boolean borrowedToCustomer = Boolean.parseBoolean(values[6]);
+		Book book = new Book(id, title, value, totalPages, publisher);
+		if(borrowedToCustomer) {
+		String customerName = values[7];
+		String customerPhoneNumber = values[8];
+		book.setBorrowedToCustomer(borrowedToCustomer);
+		book.setCustomerLentTo(customerName, customerPhoneNumber, id);
+		}
 		
-		return new Book(id, title, value, totalPages, publisher);
-		
+
+		return book;
 	}
 	@Override
 	public String toString() {

@@ -6,7 +6,7 @@ public class RunProgram {
 
 	public static final String TYPE_MOVIE = "movie";
 	public static final String TYPE_BOOK = "book";
-
+	public static final String EMPTY = "";
 	String libraryPath = "library.csv";
 	Library itemLibrary = new Library(libraryPath);
 
@@ -39,7 +39,7 @@ public class RunProgram {
 			checkoutCommand(arguments); 
 			break;
 		case CHECKIN:
-			// checkinCommand(arguments);
+			checkinCommand(arguments);
 			break;
 		case REGISTER:
 			registerCommand();
@@ -80,7 +80,12 @@ public class RunProgram {
 		if (type.equals(TYPE_MOVIE) || type.equals(TYPE_BOOK)) {
 
 			System.out.print("\nEnter ID: ");
-			int id = Integer.parseInt(sc.nextLine());
+			String userInputId = sc.nextLine();
+			if (!itemLibrary.isIdAvailable(userInputId)) {
+				System.out.println("ID is unavailable, enter a different ID.");
+				return;
+			}
+			int id = Integer.parseInt(userInputId);
 			System.out.print("\nEnter Title: ");
 			String title = sc.nextLine();
 			System.out.print("\nEnter Value: ");
@@ -143,7 +148,6 @@ public class RunProgram {
 	}
 
 	private void checkoutCommand(String argument) {
-
 		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
 		int idOfBorrowedItem = Integer.parseInt(argument);															// to borrow
 		System.out.println("Enter customer name: ");
@@ -156,21 +160,31 @@ public class RunProgram {
 		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber, idOfBorrowedItem);
 		System.out.println(borrowedItem.toStringList());
 		
+		try {
+			itemLibrary.writeItems();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 	}
 	private void checkinCommand(String argument) {
 
 		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
-		int idOfBorrowedItem = Integer.parseInt(argument); // to borrow
-		//System.out.println("Enter article number: ");
-			String customerName = sc.nextLine();
-		// System.out.println("Enter customer phone number: ");
-			String customerPhoneNumber = sc.nextLine();
 
 		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
+		String customerName = borrowedItem.getCustomerLentToName();
+		
 		borrowedItem.setBorrowedToCustomer(false);
-		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber,idOfBorrowedItem - 1);
-		System.out.println(borrowedItem.toStringList());
+		borrowedItem.setCustomerLentTo(EMPTY, EMPTY, -1);
+			
+		try {
+			itemLibrary.writeItems();
+			System.out.printf("\nSuccefully returned %s from %s\n", borrowedItem.getTitle(), customerName);
+		} catch (IOException e) {
 	
+			e.printStackTrace();
+		}
 }
 }

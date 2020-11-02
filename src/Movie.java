@@ -38,8 +38,15 @@ public class Movie extends Item {
 		int value = Integer.parseInt(values[3]);
 		int runtime = Integer.parseInt(values[4]);
 		float rating = Float.parseFloat(values[5]);
-		
+		boolean borrowedToCustomer = Boolean.parseBoolean(values[6]);
 		Movie movie = new Movie(id, title, value, runtime, rating);
+		if(borrowedToCustomer) {
+			String customerName = values[7];
+			String customerPhoneNumber = values[8];
+			movie.setBorrowedToCustomer(borrowedToCustomer);
+			movie.setCustomerLentTo(customerName, customerPhoneNumber, id);
+		}
+
 		return movie;
 		
 	}
