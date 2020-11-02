@@ -55,7 +55,11 @@ public class Book extends Item {
 	}
 	@Override
 	public String toString() {
-		return String.format("ID: %d | Title: %s | Value: %d | Total pages: %d | Publisher: %s", getId(), getTitle(), getValue(), this.totalPages, this.publisher);
+		String formatedString =  String.format("ID: %d | Title: %s | Value: %d | Total pages: %d | Publisher: %s", getId(), getTitle(), getValue(), this.totalPages, this.publisher);
+		if(this.borrowedToCustomer) {
+			formatedString += customerLentTo.toString();
+		}
+		return formatedString;
 	}
 	
 }

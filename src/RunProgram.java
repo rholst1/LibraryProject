@@ -109,16 +109,15 @@ public class RunProgram {
 				Book userInputBook = new Book(id, title, value, totalPages, publisher);
 				itemLibrary.add(userInputBook);
 			}
-			try {
+			
 				itemLibrary.writeItems();
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
+				
+				System.out.printf("Successfully registered %s." ,title);
+			
 		}else {
 			commandManager.syntaxError();
 		}
-	}
+}
 
 	private void deRegisterCommand(String id) {
 
@@ -164,14 +163,9 @@ public class RunProgram {
 		borrowedItem.setBorrowedToCustomer(true);
 		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber, idOfBorrowedItem);
 		
-		System.out.printf("\nSuccefully lended %s to %s\n", borrowedItem.getTitle(), customerName);
-		
-		try {
-			itemLibrary.writeItems();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		System.out.printf("\nSuccesfully lended %s to %s\n", borrowedItem.getTitle(), customerName);
+	
+		itemLibrary.writeItems();
 		
 		
 	}
@@ -185,12 +179,9 @@ public class RunProgram {
 		borrowedItem.setBorrowedToCustomer(false);
 		borrowedItem.setCustomerLentTo(EMPTY, EMPTY, -1);
 			
-		try {
+		
 			itemLibrary.writeItems();
-			System.out.printf("\nSuccefully returned %s from %s\n", borrowedItem.getTitle(), customerName);
-		} catch (IOException e) {
-	
-			e.printStackTrace();
-		}
-}
+			System.out.printf("\nSuccesfully returned %s from %s\n", borrowedItem.getTitle(), customerName);
+
+	}
 }

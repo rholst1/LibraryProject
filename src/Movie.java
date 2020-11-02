@@ -53,7 +53,11 @@ public class Movie extends Item {
 	
 	@Override
 	public String toString() {
-		return String.format("ID: %d | Title: %s | Value: %d | Runtime: %d | Rating: %.1f", getId(), getTitle(), getValue(), this.runtime, this.rating);
+		String formatedString = String.format("ID: %d | Title: %s | Value: %d | Runtime: %d | Rating: %.1f", getId(), getTitle(), getValue(), this.runtime, this.rating);
+		if(this.borrowedToCustomer) {
+			formatedString += customerLentTo.toString();
+		}
+		return formatedString;
 	}
 	
 }
