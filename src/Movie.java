@@ -7,7 +7,7 @@ public class Movie extends Item {
 	
 	public Movie(int id, String title, int value, int runtime, float rating) {
 		super();
-		this.typeOfItem = RunProgram.TYPE_MOVIE;
+		this.typeOfItem = TYPE_MOVIE;
 		this.id = id;
 		this.title = title;
 		this.value = value;

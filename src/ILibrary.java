@@ -1,6 +1,17 @@
+import java.util.LinkedList;
 
-public interface ILibrary<T> {
-	void add(T movie);
+public interface ILibrary {
 
-	void remove(int index);
+	String TYPE_MOVIE = "movie";
+	String TYPE_BOOK = "book";
+	String EMPTY = "";
+	String IN_STOCK = " (In stock)";
+	int EMPTY_INT = -1;
+
+	String libraryPath = "library.csv";
+	Library itemLibrary = new Library(libraryPath);
+	
+	LinkedList<Item> library = new LinkedList<Item>();
+
+	
 }

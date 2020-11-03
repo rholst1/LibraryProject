@@ -5,7 +5,7 @@ public class Book extends Item {
 
 	protected Book(int id, String title, int value, int totalPages, String publisher) {
 		super();
-		this.typeOfItem = RunProgram.TYPE_BOOK;
+		this.typeOfItem = TYPE_BOOK;
 		this.id = id;
 		this.title = title;
 		this.value = value;

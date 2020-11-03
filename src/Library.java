@@ -11,9 +11,9 @@ import java.util.Scanner;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-public class Library {
+public class Library implements ILibrary {
 
-	private LinkedList<Item> library = new LinkedList();
+	//private LinkedList<Item> library = new LinkedList();
 
 	private String libraryPath;
 
@@ -115,7 +115,7 @@ public class Library {
 	public void printInventory() {
 		for (int i = 0; i < library.size(); i++) {
 			Item thisItem = library.get(i);
-			System.out.println(thisItem.toStringList());
+			System.out.printf("\n"+thisItem.toStringList());
 		}
 	}
 	

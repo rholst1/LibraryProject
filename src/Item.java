@@ -1,5 +1,5 @@
 
-public class Item {
+public class Item implements ILibrary {
 	
 	protected int id;
 	protected String title;
@@ -7,7 +7,7 @@ public class Item {
 	protected String typeOfItem;
 	
 	protected boolean borrowedToCustomer = false;
-	protected Customer customerLentTo = new Customer("", "", -1);
+	protected Customer customerLentTo = new Customer(EMPTY, EMPTY, EMPTY_INT);
 	
 	
 	
@@ -62,7 +62,9 @@ public class Item {
 		String formatedString = String.format("ID: %d | Type: %s | Title: %s", this.id, this.typeOfItem, this.title);
 		if (borrowedToCustomer) {
 			formatedString += customerLentTo.toString();
-		}
+		} else if (!borrowedToCustomer) {
+		return formatedString+=IN_STOCK;
+	}
 		return formatedString;
 	}
 
