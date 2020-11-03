@@ -85,9 +85,12 @@ public class Commands implements ILibrary {
 		if (type.equals(TYPE_MOVIE) || type.equals(TYPE_BOOK)) {
 
 			System.out.print("\nEnter ID: ");
+			
 			String userInputId = sc.nextLine();
+			Integer.parseInt(userInputId);
+			
 			if (itemLibrary.validId(userInputId)) {
-				System.out.println("ID is unavailable, enter a different ID.");
+				ErrorMessage.itemIdAlreadyExist();
 				return;
 			}
 			int id = Integer.parseInt(userInputId);

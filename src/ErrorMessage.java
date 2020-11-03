@@ -1,5 +1,5 @@
 
-public class ErrorMessage {
+public class ErrorMessage extends Exception {
 
 	public static void syntaxError() {
 		System.out.println("Wrong syntax, try again.");
