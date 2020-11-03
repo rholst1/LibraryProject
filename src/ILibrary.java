@@ -4,7 +4,7 @@ public interface ILibrary {
 
 	String TYPE_MOVIE = "movie";
 	String TYPE_BOOK = "book";
-	String EMPTY = "";
+	String EMPTY_STRING = "";
 	String IN_STOCK = " (In stock)";
 	int EMPTY_INT = -1;
 

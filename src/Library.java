@@ -122,7 +122,7 @@ public class Library implements ILibrary {
 	
 
 	
-	public boolean validId(String id) {
+	public boolean validId(String id) throws NumberFormatException {
 		int intId = Integer.parseInt(id);
 
 		for (int i = 0; i < library.size(); i++) {
@@ -136,7 +136,7 @@ public class Library implements ILibrary {
 		return false;
 	}
 
-	public int getIndexFromItemId(String id) {
+	public int getIndexFromItemId(String id) throws NumberFormatException {
 		int intId = Integer.parseInt(id);
 		for (int i = 0; i < library.size(); i++) {
 			Item tempItem = library.get(i);

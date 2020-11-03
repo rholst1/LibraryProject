@@ -7,7 +7,7 @@ public class Item implements ILibrary {
 	protected String typeOfItem;
 	
 	protected boolean borrowedToCustomer = false;
-	protected Customer customerLentTo = new Customer(EMPTY, EMPTY, EMPTY_INT);
+	protected Customer customerLentTo = new Customer(EMPTY_STRING, EMPTY_STRING, EMPTY_INT);
 	
 	
 	

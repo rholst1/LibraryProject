@@ -1,9 +1,10 @@
 import java.util.Scanner;
+import java.text.ParseException;
 
 public class Commands implements ILibrary {
-	
+
 	Scanner sc = new Scanner(System.in);
-	
+
 	public static enum Command {
 		LIST, // Prints article number, Title and status
 		CHECKOUT, // Lets user add name and phone number to system, and removes item from stock
@@ -11,7 +12,7 @@ public class Commands implements ILibrary {
 		REGISTER, // Adding a new item to system
 		DEREGISTER, // Removing item from system
 		INFO, // Prints out information about item with that article number
-		QUIT, // QUits the program
+		INVALID_ID, QUIT, // QUits the program
 		UNKNOWN; // UNKNOWN COMMAND
 	}
 
@@ -44,33 +45,56 @@ public class Commands implements ILibrary {
 		for (int i = 1; i < commandAndArguments.length; i++) {
 			arguments += commandAndArguments[i];
 		}
-		return arguments; // contains only the arguments
+			return arguments;	
 	}
 
 	public void handleCommand(Commands.Command userCommand, String arguments) {
+		try {
 		switch (userCommand) {
 		case LIST:
 			listCommand();
 			break;
 		case CHECKOUT:
-			checkoutCommand(arguments);
+			if (itemLibrary.validId(arguments)) {
+				checkoutCommand(arguments);
+			} else {
+				System.out.println(ErrorMessage.itemDoesNotExist());
+			}
 			break;
 		case CHECKIN:
-			checkinCommand(arguments);
+			if (itemLibrary.validId(arguments)) {
+				checkinCommand(arguments);
+			} else {
+				System.out.println(ErrorMessage.itemDoesNotExist());
+			}
 			break;
 		case REGISTER:
 			registerCommand();
 
 			break;
 		case DEREGISTER:
-			deRegisterCommand(arguments);
+			if (itemLibrary.validId(arguments)) {
+				deRegisterCommand(arguments);
+			} else {
+				System.out.println(ErrorMessage.itemDoesNotExist());
+			}
 			break;
 		case INFO:
-			infoCommand(arguments);
+			if (itemLibrary.validId(arguments)) {
+				infoCommand(arguments);
+			} else {
+				System.out.println(ErrorMessage.itemDoesNotExist());
+			}
 			break;
 		case QUIT:
 			System.exit(0);
 			break;
+		case UNKNOWN:
+			System.out.println(ErrorMessage.unknownCommand());
+			break;
+		}
+		} catch (NumberFormatException e) {
+			System.out.println(ErrorMessage.inputErrorId());
 		}
 	}
 
@@ -79,42 +103,65 @@ public class Commands implements ILibrary {
 	}
 
 	private void registerCommand() {
+		String userInputId = EMPTY_STRING, title = EMPTY_STRING, publisher = EMPTY_STRING;
+		int id = EMPTY_INT, value = EMPTY_INT, runtime = EMPTY_INT, totalPages = EMPTY_INT;
+		float rating = (float) EMPTY_INT;
+
 		System.out.print("\nEnter type: 'movie' or 'book'");
 
 		String type = sc.nextLine();
 		if (type.equals(TYPE_MOVIE) || type.equals(TYPE_BOOK)) {
 
 			System.out.print("\nEnter ID: ");
-			
-			String userInputId = sc.nextLine();
-			Integer.parseInt(userInputId);
-			
-			if (itemLibrary.validId(userInputId)) {
-				ErrorMessage.itemIdAlreadyExist();
+			try {
+				userInputId = sc.nextLine();
+
+				if (itemLibrary.validId(userInputId)) {
+					ErrorMessage.itemIdAlreadyExist();
+					return;
+				}
+				id = Integer.parseInt(userInputId);
+			} catch (NumberFormatException e) {
+				System.out.println(ErrorMessage.inputErrorId());
 				return;
 			}
-			int id = Integer.parseInt(userInputId);
-			System.out.print("\nEnter Title: ");
-			String title = sc.nextLine();
-			System.out.print("\nEnter Value: ");
-			int value = Integer.parseInt(sc.nextLine());
-
+			try {
+				System.out.print("\nEnter Title: ");
+				title = sc.nextLine();
+				System.out.print("\nEnter Value: ");
+				value = Integer.parseInt(sc.nextLine());
+			} catch (NumberFormatException e) {
+				System.out.println(ErrorMessage.inputErrorValue());
+				return;
+			}
 			if (type.equals(TYPE_MOVIE)) {
-
-				System.out.print("\nEnter Runtime: ");
-				int runtime = Integer.parseInt(sc.nextLine());
-				System.out.print("\nEnter Rating: ");
-				float rating = Float.parseFloat(sc.nextLine());
-
+				try {
+					System.out.print("\nEnter Runtime: ");
+					runtime = Integer.parseInt(sc.nextLine());
+				} catch (NumberFormatException e) {
+					System.out.println(ErrorMessage.inputErrorRuntime());
+					return;
+				}
+				try {
+					System.out.print("\nEnter Rating: ");
+					rating = Float.parseFloat(sc.nextLine());
+				} catch (NumberFormatException e) {
+					System.out.println(ErrorMessage.inputErrorRating());
+					return;
+				}
 				Movie userInputMovie = new Movie(id, title, value, runtime, rating);
 				itemLibrary.add(userInputMovie);
 
 			} else if (type.equals(TYPE_BOOK)) {
-
-				System.out.println("\nEnter Total pages: ");
-				int totalPages = Integer.parseInt(sc.nextLine());
+				try {
+					System.out.println("\nEnter Total pages: ");
+					totalPages = Integer.parseInt(sc.nextLine());
+				} catch (NumberFormatException e) {
+					System.out.println(ErrorMessage.inputErrorTotalPages());
+					return;
+				}
 				System.out.println("\nEnter publisher: ");
-				String publisher = sc.nextLine();
+				publisher = sc.nextLine();
 
 				Book userInputBook = new Book(id, title, value, totalPages, publisher);
 				itemLibrary.add(userInputBook);
@@ -125,7 +172,7 @@ public class Commands implements ILibrary {
 			System.out.printf("Successfully registered %s.", title);
 
 		} else {
-			ErrorMessage.syntaxError();
+			ErrorMessage.inputErrorType();
 		}
 	}
 
@@ -144,15 +191,18 @@ public class Commands implements ILibrary {
 	}
 
 	private void infoCommand(String id) {
-
-		Item thisItem = itemLibrary.get(itemLibrary.getIndexFromItemId(id));
-		String thisTypeOfItem = thisItem.getTypeOfItem();
-		if (thisTypeOfItem.equals(TYPE_MOVIE)) {
-			Movie thisItemMovie = (Movie) thisItem;
-			System.out.println(thisItemMovie.toString());
-		} else if (thisTypeOfItem.equals(TYPE_BOOK)) {
-			Book thisItemBook = (Book) thisItem;
-			System.out.println(thisItemBook.toString());
+		try {
+			Item thisItem = itemLibrary.get(itemLibrary.getIndexFromItemId(id));
+			String thisTypeOfItem = thisItem.getTypeOfItem();
+			if (thisTypeOfItem.equals(TYPE_MOVIE)) {
+				Movie thisItemMovie = (Movie) thisItem;
+				System.out.println(thisItemMovie.toString());
+			} else if (thisTypeOfItem.equals(TYPE_BOOK)) {
+				Book thisItemBook = (Book) thisItem;
+				System.out.println(thisItemBook.toString());
+			}
+		} catch (NumberFormatException e) {
+			System.out.println(ErrorMessage.inputErrorId());
 		}
 	}
 
@@ -162,8 +212,13 @@ public class Commands implements ILibrary {
 	}
 
 	private void checkoutCommand(String argument) {
-		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
-		int idOfBorrowedItem = Integer.parseInt(argument); // to borrow
+		int indexOfBorrowedItem = EMPTY_INT, idOfBorrowedItem = EMPTY_INT;
+		try {
+			indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
+			idOfBorrowedItem = Integer.parseInt(argument); // to borrow
+		} catch (NumberFormatException e) {
+			System.out.println(ErrorMessage.inputErrorId());
+		}
 		System.out.println("Enter customer name: ");
 		String customerName = sc.nextLine();
 		System.out.println("Enter customer phone number: ");
@@ -174,7 +229,6 @@ public class Commands implements ILibrary {
 		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber, idOfBorrowedItem);
 
 		System.out.printf("\nSuccesfully lended %s to %s\n", borrowedItem.getTitle(), customerName);
-
 		itemLibrary.writeItems();
 
 	}
@@ -187,7 +241,7 @@ public class Commands implements ILibrary {
 		String customerName = borrowedItem.getCustomerLentToName();
 
 		borrowedItem.setBorrowedToCustomer(false);
-		borrowedItem.setCustomerLentTo(EMPTY, EMPTY, -1);
+		borrowedItem.setCustomerLentTo(EMPTY_STRING, EMPTY_STRING, -1);
 
 		itemLibrary.writeItems();
 		System.out.printf("\nSuccesfully returned %s from %s\n", borrowedItem.getTitle(), customerName);

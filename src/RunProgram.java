@@ -13,9 +13,9 @@ public class RunProgram implements ILibrary {
 		while (running) {
 			System.out.printf("\nPlease enter a command:> ");
 			String userInput = sc.nextLine();
-
-			commandManager.handleCommand(commandManager.parseCommand(userInput),
-					commandManager.parseArguments(userInput));
+			
+			
+			commandManager.handleCommand(commandManager.parseCommand(userInput), commandManager.parseArguments(userInput));
 
 		}
 		
