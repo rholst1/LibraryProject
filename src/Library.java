@@ -113,6 +113,7 @@ public class Library implements ILibrary {
 
 
 	public void printInventory() {
+		System.out.printf("\n*************Current Inventory Status*************");
 		for (int i = 0; i < library.size(); i++) {
 			Item thisItem = library.get(i);
 			System.out.printf("\n"+thisItem.toStringList());

@@ -24,7 +24,6 @@ public class RunProgram implements ILibrary {
 	
 	private void initialPrompt() {
 		System.out.printf("\nWelcome!");
-		System.out.printf("\n*************Current Inventory Status*************");
 		itemLibrary.printInventory();
 		System.out.printf("\n*******************Command list*******************");
 		commandManager.displayCommands();
