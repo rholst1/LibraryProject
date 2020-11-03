@@ -78,17 +78,6 @@ public class Commands implements ILibrary {
 		itemLibrary.printInventory();
 	}
 
-	private void removeCommand(String[] arguments) {
-		int index;
-		try {
-			index = Integer.parseInt(arguments[0]);
-		} catch (Exception e) {
-			System.out.println("Failed to parse index from arguments.");
-			return;
-		}
-
-	}
-
 	private void registerCommand() {
 		System.out.print("\nEnter type: 'movie' or 'book'");
 
