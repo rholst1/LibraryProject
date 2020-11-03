@@ -1,10 +1,8 @@
 
-
 public class Movie extends Item {
 	private int runtime;
 	private float rating;
-	
-	
+
 	public Movie(int id, String title, int value, int runtime, float rating) {
 		super();
 		this.typeOfItem = TYPE_MOVIE;
@@ -14,25 +12,30 @@ public class Movie extends Item {
 		this.runtime = runtime;
 		this.rating = rating;
 	}
+
 	public int getRuntime() {
 		return runtime;
 	}
+
 	public void setRuntime(int runtime) {
 		this.runtime = runtime;
 	}
+
 	public float getRating() {
 		return rating;
 	}
+
 	public void setRating(float rating) {
 		this.rating = rating;
 	}
 
 	public String movieCsvRecord() {
-		return String.format("%s,%d,%s,%d,%d,%.1f", this.typeOfItem, this.id, this.title, this.value, this.runtime, this.rating);
+		return String.format("%s,%d,%s,%d,%d,%.1f", this.typeOfItem, this.id, this.title, this.value, this.runtime,
+				this.rating);
 	}
-	
+
 	public static Movie parseMovie(String csvRecord) {
-		String[] values = csvRecord.split(",");	
+		String[] values = csvRecord.split(",");
 		int id = Integer.parseInt(values[1]);
 		String title = values[2];
 		int value = Integer.parseInt(values[3]);
@@ -40,7 +43,7 @@ public class Movie extends Item {
 		float rating = Float.parseFloat(values[5]);
 		boolean borrowedToCustomer = Boolean.parseBoolean(values[6]);
 		Movie movie = new Movie(id, title, value, runtime, rating);
-		if(borrowedToCustomer) {
+		if (borrowedToCustomer) {
 			String customerName = values[7];
 			String customerPhoneNumber = values[8];
 			movie.setBorrowedToCustomer(borrowedToCustomer);
@@ -48,16 +51,17 @@ public class Movie extends Item {
 		}
 
 		return movie;
-		
+
 	}
-	
+
 	@Override
 	public String toString() {
-		String formatedString = String.format("ID: %d | Title: %s | Value: %d | Runtime: %d | Rating: %.1f", getId(), getTitle(), getValue(), this.runtime, this.rating);
-		if(this.borrowedToCustomer) {
+		String formatedString = String.format("ID: %d | Title: %s | Value: %d | Runtime: %d | Rating: %.1f", getId(),
+				getTitle(), getValue(), this.runtime, this.rating);
+		if (this.borrowedToCustomer) {
 			formatedString += customerLentTo.toString();
 		}
 		return formatedString;
 	}
-	
+
 }

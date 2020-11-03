@@ -10,8 +10,7 @@ public interface ILibrary {
 
 	String libraryPath = "library.csv";
 	Library itemLibrary = new Library(libraryPath);
-	
+
 	LinkedList<Item> library = new LinkedList<Item>();
 
-	
 }

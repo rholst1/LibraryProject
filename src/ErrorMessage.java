@@ -4,6 +4,7 @@ public class ErrorMessage extends Exception {
 	public ErrorMessage(String errorMessage) {
 		super(errorMessage);
 	}
+
 	public static String syntaxError() {
 		return "Wrong syntax, try again.";
 	}
@@ -42,13 +43,14 @@ public class ErrorMessage extends Exception {
 	}
 
 	public static String inputErrorRating() {
-		
+
 		return "Please use only decimal numbers separated with a dot '.' while entering a value [0-9.0-9].";
 	}
 
 	public static String inputErrorTotalPages() {
 		return "Please use only numbers while entering total pages [0-9].";
 	}
+
 	public static String inputErrorType() {
 		return "Please enter 'movie' or 'book', try again.";
 	}

@@ -30,12 +30,13 @@ public class Book extends Item {
 	}
 
 	public String bookCsvRecord() {
-		return String.format("%s,%d,%s,%d,%d,%s,\n", this.typeOfItem, this.id, this.title, this.value, this.totalPages, this.publisher);
+		return String.format("%s,%d,%s,%d,%d,%s,\n", this.typeOfItem, this.id, this.title, this.value, this.totalPages,
+				this.publisher);
 	}
-	
+
 	public static Book parseBook(String csvRecord) {
 		String[] values = csvRecord.split(",");
-		
+
 		int id = Integer.parseInt(values[1]);
 		String title = values[2];
 		int value = Integer.parseInt(values[3]);
@@ -43,23 +44,24 @@ public class Book extends Item {
 		String publisher = values[5];
 		boolean borrowedToCustomer = Boolean.parseBoolean(values[6]);
 		Book book = new Book(id, title, value, totalPages, publisher);
-		if(borrowedToCustomer) {
-		String customerName = values[7];
-		String customerPhoneNumber = values[8];
-		book.setBorrowedToCustomer(borrowedToCustomer);
-		book.setCustomerLentTo(customerName, customerPhoneNumber, id);
+		if (borrowedToCustomer) {
+			String customerName = values[7];
+			String customerPhoneNumber = values[8];
+			book.setBorrowedToCustomer(borrowedToCustomer);
+			book.setCustomerLentTo(customerName, customerPhoneNumber, id);
 		}
-		
 
 		return book;
 	}
+
 	@Override
 	public String toString() {
-		String formatedString =  String.format("ID: %d | Title: %s | Value: %d | Total pages: %d | Publisher: %s", getId(), getTitle(), getValue(), this.totalPages, this.publisher);
-		if(this.borrowedToCustomer) {
+		String formatedString = String.format("ID: %d | Title: %s | Value: %d | Total pages: %d | Publisher: %s",
+				getId(), getTitle(), getValue(), this.totalPages, this.publisher);
+		if (this.borrowedToCustomer) {
 			formatedString += customerLentTo.toString();
 		}
 		return formatedString;
 	}
-	
+
 }

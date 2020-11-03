@@ -13,7 +13,7 @@ import org.apache.commons.csv.CSVPrinter;
 
 public class Library implements ILibrary {
 
-	//private LinkedList<Item> library = new LinkedList();
+	// private LinkedList<Item> library = new LinkedList();
 
 	private String libraryPath;
 
@@ -54,20 +54,22 @@ public class Library implements ILibrary {
 		try {
 			FileWriter writer = new FileWriter(libraryPath, false);
 			CSVPrinter printer = new CSVPrinter(writer, CSVFormat.EXCEL);
-			
+
 			for (Item item : library) {
 				String type = item.getTypeOfItem();
 				if (type.equals(RunProgram.TYPE_MOVIE)) {
 					Movie movie = (Movie) item;
-					
-					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(), 
-							movie.getRuntime(), movie.getRating(), movie.isBorrowedToCustomer(), movie.getCustomerLentToName(), movie.getCustomerLentToPhoneNumber());
+
+					printer.printRecord(movie.getTypeOfItem(), movie.getId(), movie.getTitle(), movie.getValue(),
+							movie.getRuntime(), movie.getRating(), movie.isBorrowedToCustomer(),
+							movie.getCustomerLentToName(), movie.getCustomerLentToPhoneNumber());
 				} else if (type.equals(RunProgram.TYPE_BOOK)) {
 
 					Book book = (Book) item;
-					
+
 					printer.printRecord(book.getTypeOfItem(), book.getId(), book.getTitle(), book.getValue(),
-							book.getTotalPages(), book.getPublisher(), book.isBorrowedToCustomer(), book.getCustomerLentToName(), book.getCustomerLentToPhoneNumber());
+							book.getTotalPages(), book.getPublisher(), book.isBorrowedToCustomer(),
+							book.getCustomerLentToName(), book.getCustomerLentToPhoneNumber());
 				}
 
 			}
@@ -89,18 +91,18 @@ public class Library implements ILibrary {
 				String typeOfItem = parseItem(contents);
 
 				if (typeOfItem.equals(RunProgram.TYPE_MOVIE)) {
-					
+
 					add((Item) Movie.parseMovie(contents));
-					
+
 				} else if (typeOfItem.equals(RunProgram.TYPE_BOOK)) {
-					
+
 					add((Item) (Book.parseBook(contents)));
 				}
 
 			}
 
 		} catch (FileNotFoundException e) {
-			
+
 		}
 
 	}
@@ -111,17 +113,14 @@ public class Library implements ILibrary {
 		return typeOfItem;
 	}
 
-
 	public void printInventory() {
 		System.out.printf("\n*************Current Inventory Status*************");
 		for (int i = 0; i < library.size(); i++) {
 			Item thisItem = library.get(i);
-			System.out.printf("\n"+thisItem.toStringList());
+			System.out.printf("\n" + thisItem.toStringList());
 		}
 	}
-	
 
-	
 	public boolean validId(String id) throws NumberFormatException {
 		int intId = Integer.parseInt(id);
 
@@ -144,7 +143,7 @@ public class Library implements ILibrary {
 			if (intId == tempId) {
 				return i;
 			}
-		
+
 		}
 		System.out.println("Could not find the item. Enter a valid ID.");
 		return -1;

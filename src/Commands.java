@@ -45,54 +45,54 @@ public class Commands implements ILibrary {
 		for (int i = 1; i < commandAndArguments.length; i++) {
 			arguments += commandAndArguments[i];
 		}
-			return arguments;	
+		return arguments;
 	}
 
 	public void handleCommand(Commands.Command userCommand, String arguments) {
 		try {
-		switch (userCommand) {
-		case LIST:
-			listCommand();
-			break;
-		case CHECKOUT:
-			if (itemLibrary.validId(arguments)) {
-				checkoutCommand(arguments);
-			} else {
-				System.out.println(ErrorMessage.itemDoesNotExist());
-			}
-			break;
-		case CHECKIN:
-			if (itemLibrary.validId(arguments)) {
-				checkinCommand(arguments);
-			} else {
-				System.out.println(ErrorMessage.itemDoesNotExist());
-			}
-			break;
-		case REGISTER:
-			registerCommand();
+			switch (userCommand) {
+			case LIST:
+				listCommand();
+				break;
+			case CHECKOUT:
+				if (itemLibrary.validId(arguments)) {
+					checkoutCommand(arguments);
+				} else {
+					System.out.println(ErrorMessage.itemDoesNotExist());
+				}
+				break;
+			case CHECKIN:
+				if (itemLibrary.validId(arguments)) {
+					checkinCommand(arguments);
+				} else {
+					System.out.println(ErrorMessage.itemDoesNotExist());
+				}
+				break;
+			case REGISTER:
+				registerCommand();
 
-			break;
-		case DEREGISTER:
-			if (itemLibrary.validId(arguments)) {
-				deRegisterCommand(arguments);
-			} else {
-				System.out.println(ErrorMessage.itemDoesNotExist());
+				break;
+			case DEREGISTER:
+				if (itemLibrary.validId(arguments)) {
+					deRegisterCommand(arguments);
+				} else {
+					System.out.println(ErrorMessage.itemDoesNotExist());
+				}
+				break;
+			case INFO:
+				if (itemLibrary.validId(arguments)) {
+					infoCommand(arguments);
+				} else {
+					System.out.println(ErrorMessage.itemDoesNotExist());
+				}
+				break;
+			case QUIT:
+				System.exit(0);
+				break;
+			case UNKNOWN:
+				System.out.println(ErrorMessage.unknownCommand());
+				break;
 			}
-			break;
-		case INFO:
-			if (itemLibrary.validId(arguments)) {
-				infoCommand(arguments);
-			} else {
-				System.out.println(ErrorMessage.itemDoesNotExist());
-			}
-			break;
-		case QUIT:
-			System.exit(0);
-			break;
-		case UNKNOWN:
-			System.out.println(ErrorMessage.unknownCommand());
-			break;
-		}
 		} catch (NumberFormatException e) {
 			System.out.println(ErrorMessage.inputErrorId());
 		}
