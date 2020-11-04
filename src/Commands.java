@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.text.ParseException;
+import java.lang.ArrayIndexOutOfBoundsException;
 
 public class Commands implements ILibrary {
 
@@ -17,6 +18,7 @@ public class Commands implements ILibrary {
 	}
 
 	public Command parseCommand(String userInput) {
+		try {
 		String commandString = userInput.split(" ")[0];
 		switch (commandString) {
 		case "list":
@@ -36,7 +38,14 @@ public class Commands implements ILibrary {
 			return Command.QUIT;
 		default:
 			return Command.UNKNOWN;
+		} 
+		} catch (ArrayIndexOutOfBoundsException e) {
+			return Command.UNKNOWN;
 		}
+		
+			
+		
+		
 	}
 
 	public String parseArguments(String userInput) {
@@ -94,7 +103,7 @@ public class Commands implements ILibrary {
 				break;
 			}
 		} catch (NumberFormatException e) {
-			System.out.println(ErrorMessage.inputErrorId());
+			System.out.println(ErrorMessage.syntaxError()+ErrorMessage.inputErrorId());
 		}
 	}
 
@@ -172,8 +181,8 @@ public class Commands implements ILibrary {
 			System.out.printf("Successfully registered %s.", title);
 
 		} else {
-			ErrorMessage.inputErrorType();
-		}
+			System.out.println(ErrorMessage.inputErrorType());
+			}
 	}
 
 	private void deRegisterCommand(String id) {

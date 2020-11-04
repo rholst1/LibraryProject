@@ -6,7 +6,7 @@ public class ErrorMessage extends Exception {
 	}
 
 	public static String syntaxError() {
-		return "Wrong syntax, try again.";
+		return "Syntax error: ";
 	}
 
 	public static String unknownCommand() {
