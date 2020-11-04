@@ -5,13 +5,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-public class Library implements ILibrary {
+public class Library<T> implements ILibrary {
 
 	// private LinkedList<Item> library = new LinkedList();
 
@@ -114,6 +117,7 @@ public class Library implements ILibrary {
 	}
 
 	public void printInventory() {
+		sortList();
 		System.out.printf("\n*************Current Inventory Status*************");
 		for (int i = 0; i < library.size(); i++) {
 			Item thisItem = library.get(i);
@@ -147,5 +151,9 @@ public class Library implements ILibrary {
 		}
 		System.out.println("Could not find the item. Enter a valid ID.");
 		return -1;
+	}
+	
+	public void sortList() {
+		Collections.sort(library);
 	}
 }

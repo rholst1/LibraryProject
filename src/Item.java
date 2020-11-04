@@ -1,5 +1,5 @@
 
-public class Item implements ILibrary {
+public class Item implements ILibrary, Comparable {
 
 	protected int id;
 	protected String title;
@@ -79,6 +79,13 @@ public class Item implements ILibrary {
 
 	public Item() {
 		super();
+	}
+
+	@Override
+	public int compareTo(Object o) {
+        Item i = (Item) o; 
+        return this.id - i.id ;
+		
 	}
 
 }
