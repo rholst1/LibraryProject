@@ -13,8 +13,7 @@ public class Commands implements ILibrary {
 		REGISTER, // Adding a new item to system
 		DEREGISTER, // Removing item from system
 		INFO, // Prints out information about item with that article number
-		INVALID_ID, 
-		QUIT, // QUits the program
+		INVALID_ID, QUIT, // QUits the program
 		UNKNOWN; // UNKNOWN COMMAND
 	}
 
@@ -59,10 +58,10 @@ public class Commands implements ILibrary {
 		try {
 			switch (userCommand) {
 			case LIST:
-				if(arguments.equals(EMPTY_STRING)) {
-				listCommand();
-				}else {
-					System.out.println(ErrorMessage.syntaxError()+ErrorMessage.noArgumentsAllowed());
+				if (arguments.equals(EMPTY_STRING)) {
+					listCommand();
+				} else {
+					System.out.println(ErrorMessage.syntaxError() + ErrorMessage.noArgumentsAllowed());
 				}
 				break;
 			case CHECKOUT:
@@ -80,8 +79,11 @@ public class Commands implements ILibrary {
 				}
 				break;
 			case REGISTER:
-				registerCommand();
-
+				if (arguments.equals(EMPTY_STRING)) {
+					registerCommand();
+				} else {
+					System.out.println(ErrorMessage.syntaxError() + ErrorMessage.noArgumentsAllowed());
+				}
 				break;
 			case DEREGISTER:
 				if (itemLibrary.validId(arguments)) {
@@ -224,40 +226,40 @@ public class Commands implements ILibrary {
 
 	private void checkoutCommand(String argument) {
 		int indexOfBorrowedItem = EMPTY_INT, idOfBorrowedItem = EMPTY_INT;
-		try {
-			indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
-			idOfBorrowedItem = Integer.parseInt(argument); // to borrow
-		} catch (NumberFormatException e) {
-			System.out.println(ErrorMessage.inputErrorId());
-		}
+
+		indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
+		idOfBorrowedItem = Integer.parseInt(argument); // to borrow
+		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
+		if(borrowedItem.isBorrowedToCustomer() == false) {
 		System.out.println("Enter customer name: ");
 		String customerName = sc.nextLine();
 		System.out.println("Enter customer phone number: ");
 		String customerPhoneNumber = sc.nextLine();
 
-		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
 		borrowedItem.setBorrowedToCustomer(true);
 		borrowedItem.setCustomerLentTo(customerName, customerPhoneNumber, idOfBorrowedItem);
 
 		System.out.printf("\nSuccesfully lended %s to %s\n", borrowedItem.getTitle(), customerName);
 		itemLibrary.writeItems();
-
+		} else {
+			System.out.println(ErrorMessage.notInStockError());
+		}
 	}
 
 	private void checkinCommand(String argument) {
-		
+
 		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
 
 		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
 		String customerName = borrowedItem.getCustomerLentToName();
-		if(borrowedItem.isBorrowedToCustomer() == true) {
-		borrowedItem.setBorrowedToCustomer(false);
-		borrowedItem.setCustomerLentTo(EMPTY_STRING, EMPTY_STRING, -1);
-		
-		itemLibrary.writeItems();
-		System.out.printf("\nSuccesfully returned %s from %s\n", borrowedItem.getTitle(), customerName);
+		if (borrowedItem.isBorrowedToCustomer() == true) {
+			borrowedItem.setBorrowedToCustomer(false);
+			borrowedItem.setCustomerLentTo(EMPTY_STRING, EMPTY_STRING, -1);
+
+			itemLibrary.writeItems();
+			System.out.printf("\nSuccesfully returned %s from %s\n", borrowedItem.getTitle(), customerName);
 		} else {
-			System.out.println(ErrorMessage.InStockError());
+			System.out.println(ErrorMessage.inStockError());
 		}
 	}
 }

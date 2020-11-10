@@ -27,7 +27,7 @@ public class ErrorMessage extends Exception {
 		return "This ID does not exist, please enter a valid ID.";
 	}
 
-	public static String InStockError() {
+	public static String inStockError() {
 		return "Can't return something that isn't lent out, silly. Enter a valid ID.";
 	}
 
