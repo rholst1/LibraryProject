@@ -14,8 +14,9 @@ If you copied the project they are already.
 Make sure you have no white spaces in your pathfile, it don't work for me atleast on win 10.
 
 If you are not in the current directory while executing next command the program can't find library.csv
-1. cd <filepath-to-project>\n
-2. java -jar <filepath\LibraryProject.jar>
+When typing in the commands, leave out the '"' characters.
+1. cd "filepath-to-project"
+2. java -jar "filepath\LibraryProject.jar"
 
 **Eclipse IDE:**
 
@@ -31,7 +32,9 @@ If you are not in the current directory while executing next command the program
 Program should now be running!
 
 **Project members:**
-Rasmus Holst\n
+
+Rasmus Holst
+
 Adnan Kovacevic
 
 
