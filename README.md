@@ -11,6 +11,9 @@ How to run:
 Put library.csv and LibraryProject.jar in the same folder. 
 If you copied the project they are already.
 
+Make sure you have no white spaces in your pathfile, it don't work for me atleast on win 10.
+
+cd <filepath to project> // if you are not in the current directory while executing next command the program can't find library.csv
 java -jar <filepath\LibraryProject.jar>
 
 **Eclipse IDE:**
