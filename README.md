@@ -1,11 +1,30 @@
 # LibraryProject
  Project assignment
 
+Dependencies: Apache commons-csv-1.8
 
-Run the program from the Main-class.
 
-This project incorporates apache-commons csv 1.8.
+How to run:
 
+**Command console:**
+
+Put library.csv and LibraryProject.jar in the same folder. 
+If you copied the project they are already.
+
+java -jar <filepath\LibraryProject.jar>
+
+**Eclipse IDE:**
+
+1. File
+2. New -> Java Project
+
+3. Untick boc "Use defualt location" click browse and navigate to cloned project.
+4. Finish
+5. Dont create
+
+6. Open the projects Main.class and right click and choose Run-as -> Java App
+
+Program should now be running!
 
 **Project members:**
 Rasmus Holst
