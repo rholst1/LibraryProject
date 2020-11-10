@@ -13,6 +13,11 @@ public class ErrorMessage extends Exception {
 
 		return "Unknown command, try again.";
 	}
+	
+	public static String noArgumentsAllowed() {
+		
+		return "No arguments allowed.";
+	}
 
 	public static String itemIdAlreadyExist() {
 		return "This ID is already in use. Try again with another ID.";

@@ -13,39 +13,37 @@ public class Commands implements ILibrary {
 		REGISTER, // Adding a new item to system
 		DEREGISTER, // Removing item from system
 		INFO, // Prints out information about item with that article number
-		INVALID_ID, QUIT, // QUits the program
+		INVALID_ID, 
+		QUIT, // QUits the program
 		UNKNOWN; // UNKNOWN COMMAND
 	}
 
 	public Command parseCommand(String userInput) {
 		try {
-		String commandString = userInput.split(" ")[0];
-		switch (commandString) {
-		case "list":
-			return Command.LIST;
-		case "checkout":
-			return Command.CHECKOUT;
-		case "checkin":
-			return Command.CHECKIN;
-		case "register":
-			return Command.REGISTER;
-		case "deregister":
-			return Command.DEREGISTER;
-		case "info":
-			return Command.INFO;
-		case "quit":
-		case "exit":
-			return Command.QUIT;
-		default:
-			return Command.UNKNOWN;
-		} 
+			String commandString = userInput.split(" ")[0];
+			switch (commandString) {
+			case "list":
+				return Command.LIST;
+			case "checkout":
+				return Command.CHECKOUT;
+			case "checkin":
+				return Command.CHECKIN;
+			case "register":
+				return Command.REGISTER;
+			case "deregister":
+				return Command.DEREGISTER;
+			case "info":
+				return Command.INFO;
+			case "quit":
+			case "exit":
+				return Command.QUIT;
+			default:
+				return Command.UNKNOWN;
+			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			return Command.UNKNOWN;
 		}
-		
-			
-		
-		
+
 	}
 
 	public String parseArguments(String userInput) {
@@ -61,7 +59,11 @@ public class Commands implements ILibrary {
 		try {
 			switch (userCommand) {
 			case LIST:
+				if(arguments.equals(EMPTY_STRING)) {
 				listCommand();
+				}else {
+					System.out.println(ErrorMessage.syntaxError()+ErrorMessage.noArgumentsAllowed());
+				}
 				break;
 			case CHECKOUT:
 				if (itemLibrary.validId(arguments)) {
@@ -103,7 +105,7 @@ public class Commands implements ILibrary {
 				break;
 			}
 		} catch (NumberFormatException e) {
-			System.out.println(ErrorMessage.syntaxError()+ErrorMessage.inputErrorId());
+			System.out.println(ErrorMessage.syntaxError() + ErrorMessage.inputErrorId());
 		}
 	}
 
@@ -182,7 +184,7 @@ public class Commands implements ILibrary {
 
 		} else {
 			System.out.println(ErrorMessage.inputErrorType());
-			}
+		}
 	}
 
 	private void deRegisterCommand(String id) {
@@ -243,17 +245,19 @@ public class Commands implements ILibrary {
 	}
 
 	private void checkinCommand(String argument) {
-
+		
 		int indexOfBorrowedItem = itemLibrary.getIndexFromItemId(argument); // argument = id of the Item customer wish
 
 		Item borrowedItem = itemLibrary.get(indexOfBorrowedItem);
 		String customerName = borrowedItem.getCustomerLentToName();
-
+		if(borrowedItem.isBorrowedToCustomer() == true) {
 		borrowedItem.setBorrowedToCustomer(false);
 		borrowedItem.setCustomerLentTo(EMPTY_STRING, EMPTY_STRING, -1);
-
+		
 		itemLibrary.writeItems();
 		System.out.printf("\nSuccesfully returned %s from %s\n", borrowedItem.getTitle(), customerName);
-
+		} else {
+			System.out.println(ErrorMessage.InStockError());
+		}
 	}
 }

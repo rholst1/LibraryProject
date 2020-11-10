@@ -103,7 +103,7 @@ public class Library<T> implements ILibrary {
 				}
 
 			}
-
+			sc.close();
 		} catch (FileNotFoundException e) {
 
 		}
